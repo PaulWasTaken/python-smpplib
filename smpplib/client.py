@@ -427,12 +427,10 @@ class Client(object):
 class ThreadSafeClient(Client):
     should_stop = False
 
-    def __init__(
-        self,
-        *args,
-        select_timeout=1.0,
-        **kwargs,
-    ):
+    def __init__(self, *args, **kwargs):
+        # Socket polling period
+        select_timeout = kwargs.get('select_timeout', 1.0)
+
         super(ThreadSafeClient, self).__init__(*args, **kwargs)
 
         self._select_timeout = select_timeout
